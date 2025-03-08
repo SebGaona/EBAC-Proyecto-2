@@ -1,0 +1,163 @@
+// Variables
+$background-color: #f0f0f0;
+$card-background-color: #fff;
+$card-border-radius: 10px;
+$card-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+$font-family: "Poppins", Arial, sans-serif;
+$gap: 20px;
+$card-width: 200px;
+$image-size: 100px;
+$type-icon-size: 20px;
+
+// Mixins
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    font-family: $font-family;
+    background-color: $background-color;
+    height: 100vh;
+    margin: 0;
+}
+
+#pokemon-container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $gap;
+}
+
+.header {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    background-color: $card-background-color;
+
+    .title {
+        display: flex;
+        align-items: center; 
+    }
+
+    .logo {
+        width: 50px;
+        height: auto;
+        padding: 10px;
+    }
+
+    span {
+        padding: 10px;
+        gap: 10px;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .search-bar {
+        position: relative;
+        width: 100%;
+        max-width: 300px;
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: $card-background-color;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none; 
+        }
+
+        .search-results.show {
+            display: block;
+        }
+
+        .search-results p {
+            padding: 10px;
+            margin: 0;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #f0f0f0;
+            }
+        }
+    }
+}
+
+.pokemon-card {
+    background-color: $card-background-color;
+    border-radius: $card-border-radius;
+    box-shadow: $card-box-shadow;
+    width: $card-width;
+    @include flex-center;
+    flex-direction: column;
+    padding: 10px;
+
+    .pokemon-type {
+        display: flex;
+        gap: 5px;
+        margin-top: 10px;
+
+        .type-icon {
+            width: $type-icon-size;
+            height: $type-icon-size;
+        }
+    }
+
+    .weaknesses, .resistances {
+        margin-top: 10px;
+        font-size: 0.9em;
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        gap: 5px;
+
+        .type-icon {
+            width: $type-icon-size;
+            height: $type-icon-size;
+        }
+
+        span {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .weakness-item, .resistance-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+}
+
+
+@media (max-width: 780px) {
+    .pokemon-card {
+        width: 100%;
+    }
+}
