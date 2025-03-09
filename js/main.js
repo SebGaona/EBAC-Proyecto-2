@@ -207,11 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pokemonCard.addEventListener('click', (event) => {
             event.stopPropagation();
-            const selectedCard = document.querySelector('.pokemon-card.selected');
-            if (selectedCard) {
-                selectedCard.classList.remove('selected');
-            }
-            pokemonCard.classList.add('selected');
+            pokemonCard.classList.toggle('selected');
         });
     }
 
