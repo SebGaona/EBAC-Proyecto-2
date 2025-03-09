@@ -46,6 +46,12 @@ body {
     .title {
         display: flex;
         align-items: center; 
+        a {
+            display: flex;
+            align-items: center;;
+            text-decoration: none;
+            color: inherit;
+        }	
     }
 
     .logo {
@@ -55,6 +61,8 @@ body {
     }
 
     span {
+        text-decoration: none;
+        color: #323232;
         padding: 10px;
         gap: 10px;
         font-size: 1.5rem;
@@ -113,7 +121,7 @@ body {
     transition: transform 0.3s ease;
 
     &.selected {
-        transform: scale(1.1);
+        transform: scale(1.5);
         z-index: 10;
     }
 
