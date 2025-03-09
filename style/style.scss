@@ -16,6 +16,46 @@ $type-icon-size: 20px;
     align-items: center;
 }
 
+.search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+
+    #search-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: $card-background-color;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-height: 200px;
+        overflow-y: auto;
+        display: none; 
+    
+        &.show {
+            display: block; 
+        }
+    
+        p {
+            padding: 10px;
+            margin: 0;
+            cursor: pointer;
+    
+            &:hover {
+                background-color: #f0f0f0;
+            }
+        }
+    }
+    }
+
 body {
     font-family: $font-family;
     background-color: $background-color;

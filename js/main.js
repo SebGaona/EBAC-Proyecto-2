@@ -46,38 +46,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
 
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=21')
-        .then(response => response.json())
-        .then(data => {
-            const promises = data.results.map(pokemon => fetch(pokemon.url).then(response => response.json()));
-            Promise.all(promises).then(pokemonDataArray => {
-                pokemonDataArray.forEach(pokemonData => {
-                    displayPokemon(pokemonData);
+    function loadInitialPokemon() {
+        axios.get('https://pokeapi.co/api/v2/pokemon?limit=21')
+            .then(response => {
+                const promises = response.data.results.map(pokemon => axios.get(pokemon.url));
+                Promise.all(promises).then(pokemonResponses => {
+                    pokemonResponses.forEach(pokemonResponse => {
+                        displayPokemon(pokemonResponse.data);
+                    });
                 });
+            })
+            .catch(error => {
+                console.error("Error al cargar Pokémon iniciales:", error);
             });
-        });
+    }
+
+    loadInitialPokemon();
 
     searchInput.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase();
         searchResults.innerHTML = '';
 
         if (query.length > 0) {
-            fetch('https://pokeapi.co/api/v2/pokemon?limit=1000')
-                .then(response => response.json())
-                .then(data => {
-                    const filteredPokemon = data.results.filter(pokemon => pokemon.name.includes(query));
-                    filteredPokemon.forEach(pokemon => {
+            axios.get('https://pokeapi.co/api/v2/pokemon?limit=1000')
+                .then(response => {
+                    const filteredPokemon = response.data.results.filter(pokemon => pokemon.name.includes(query));
+                    const uniquePokemon = [...new Set(filteredPokemon.map(pokemon => pokemon.name))];
+                    const limitedPokemon = uniquePokemon.slice(0, 10);
+
+                    limitedPokemon.forEach(pokemonName => {
                         const resultItem = document.createElement('p');
-                        resultItem.textContent = pokemon.name;
+                        resultItem.textContent = pokemonName;
                         resultItem.classList.add('result-item');
                         resultItem.addEventListener('click', () => {
-                            searchInput.value = pokemon.name;
+                            searchInput.value = pokemonName;
                             searchResults.innerHTML = '';
-                            fetchPokemon(pokemon.name);
+                            fetchPokemon(pokemonName);
                         });
                         searchResults.appendChild(resultItem);
                     });
-                    searchResults.classList.add('show');
+
+                    if (limitedPokemon.length > 0) {
+                        searchResults.classList.add('show');
+                    } else {
+                        searchResults.classList.remove('show');
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al buscar Pokémon:", error);
                 });
         } else {
             searchResults.classList.remove('show');
@@ -91,34 +107,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetchPokemon(query);
             } else {
                 pokemonContainer.innerHTML = '';
-                fetch('https://pokeapi.co/api/v2/pokemon?limit=21')
-                    .then(response => response.json())
-                    .then(data => {
-                        const promises = data.results.map(pokemon => fetch(pokemon.url).then(response => response.json()));
-                        Promise.all(promises).then(pokemonDataArray => {
-                            pokemonDataArray.forEach(pokemonData => {
-                                displayPokemon(pokemonData);
-                            });
-                        });
-                    });
+                loadInitialPokemon();
             }
         }
     });
 
     function fetchPokemon(query) {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${query}`)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Pokemon not found');
-                }
-                return response.json();
-            })
-            .then(pokemonData => {
                 pokemonContainer.innerHTML = '';
-                displayPokemon(pokemonData);
+                displayPokemon(response.data);
             })
             .catch(error => {
-                pokemonContainer.innerHTML = `<p>${error.message}</p>`;
+                pokemonContainer.innerHTML = `<p>Pokémon no encontrado</p>`;
+                console.error("Error al buscar Pokémon:", error);
             });
     }
 
@@ -216,11 +218,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('click', (event) => {
-        if (!event.target.closest('.pokemon-card')) {
+        if (!event.target.closest('.pokemon-card') && !event.target.closest('.search-bar')) {
             const selectedCard = document.querySelector('.pokemon-card.selected');
             if (selectedCard) {
                 selectedCard.classList.remove('selected');
             }
+            searchResults.classList.remove('show');
         }
     });
 });
