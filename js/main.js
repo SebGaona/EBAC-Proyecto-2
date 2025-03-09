@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const types = pokemonData.types.map(type => type.type.name);
         types.forEach(type => {
             const typeImage = document.createElement('img');
-            typeImage.src = `img/Pokemon_Type_Icon_${type}.png`;
+            typeImage.src = `img/pokemon_type_icon_${type}.png`;
             typeImage.alt = `${type} type icon`;
             typeImage.classList.add('type-icon');
             pokemonTypeContainer.appendChild(typeImage);
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const weaknessContainer = document.createElement('div');
         for (const [weakType, count] of Object.entries(weaknessCounts)) {
             const weakTypeImage = document.createElement('img');
-            weakTypeImage.src = `img/Pokemon_Type_Icon_${weakType}.png`;
+            weakTypeImage.src = `img/pokemon_type_icon_${weakType}.png`;
             weakTypeImage.alt = `${weakType} type icon`;
             weakTypeImage.classList.add('type-icon');
             const multiplier = document.createElement('span');
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         types.forEach(type => {
             typeEffectiveness[type].strong.forEach(strongType => {
                 const strongTypeImage = document.createElement('img');
-                strongTypeImage.src = `img/Pokemon_Type_Icon_${strongType}.png`;
+                strongTypeImage.src = `img/pokemon_type_icon_${strongType}.png`;
                 strongTypeImage.alt = `${strongType} type icon`;
                 strongTypeImage.classList.add('type-icon');
                 const resistanceItem = document.createElement('div');
