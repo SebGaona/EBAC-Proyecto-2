@@ -17,6 +17,7 @@ const typeColors = {
     dark: '#705746',
     steel: '#B7B7CE',
     fairy: '#D685AD'
+    // No termine usando estos colores pero los dejo por si acaso los necesito
 };
 
 const typeEffectiveness = {
