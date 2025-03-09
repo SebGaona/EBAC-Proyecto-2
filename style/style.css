@@ -29,16 +29,15 @@ body {
   display: flex;
   align-items: center;
 }
-.header .title a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-}
 .header .logo {
   width: 50px;
   height: auto;
   padding: 10px;
+}
+.header a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 .header span {
   text-decoration: none;
@@ -47,40 +46,6 @@ body {
   gap: 10px;
   font-size: 1.5rem;
   font-weight: 600;
-}
-.header .search-bar {
-  position: relative;
-  width: 100%;
-  max-width: 300px;
-}
-.header .search-bar #search-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-.header .search-bar .search-results {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  max-height: 200px;
-  overflow-y: auto;
-  display: none;
-}
-.header .search-bar .search-results.show {
-  display: block;
-}
-.header .search-bar .search-results p {
-  padding: 10px;
-  margin: 0;
-  cursor: pointer;
-}
-.header .search-bar .search-results p:hover {
-  background-color: #f0f0f0;
 }
 
 .pokemon-card {
@@ -94,6 +59,8 @@ body {
   flex-direction: column;
   padding: 10px;
   transition: transform 0.3s ease;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .pokemon-card.selected {
   transform: scale(1.5);
@@ -152,5 +119,10 @@ footer {
 @media (max-width: 780px) {
   .pokemon-card {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .pokemon-card.selected {
+    transform: scale(1.05);
   }
 }/*# sourceMappingURL=style.css.map */
