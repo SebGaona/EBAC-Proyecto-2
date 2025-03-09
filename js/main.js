@@ -44,6 +44,7 @@ const typeEffectiveness = {
 document.addEventListener('DOMContentLoaded', () => {
     const pokemonContainer = document.getElementById('pokemon-container');
     const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
 
     fetch('https://pokeapi.co/api/v2/pokemon?limit=21')
         .then(response => response.json())
@@ -124,18 +125,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayPokemon(pokemonData) {
         const pokemonCard = document.createElement('div');
         pokemonCard.classList.add('pokemon-card');
-    
+
         const pokemonImage = document.createElement('img');
         pokemonImage.src = pokemonData.sprites.front_default;
         pokemonImage.classList.add('pokemon-image');
-    
+
         const pokemonName = document.createElement('h2');
         pokemonName.textContent = pokemonData.name;
         pokemonName.classList.add('pokemon-name');
-    
+
         const pokemonTypeContainer = document.createElement('div');
         pokemonTypeContainer.classList.add('pokemon-type');
-    
+
         const types = pokemonData.types.map(type => type.type.name);
         types.forEach(type => {
             const typeImage = document.createElement('img');
@@ -144,10 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
             typeImage.classList.add('type-icon');
             pokemonTypeContainer.appendChild(typeImage);
         });
-    
+
         const pokemonNumber = document.createElement('p');
         pokemonNumber.textContent = `Pokedex Number: ${pokemonData.id}`;
-    
+
         const weaknesses = document.createElement('div');
         weaknesses.classList.add('weaknesses');
         weaknesses.innerHTML = `<strong>Weaknesses:</strong>`;
@@ -176,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             weaknessContainer.appendChild(weaknessItem);
         }
         weaknesses.appendChild(weaknessContainer);
-    
+
         const resistances = document.createElement('div');
         resistances.classList.add('resistances');
         resistances.innerHTML = `<strong>Resistances:</strong>`;
@@ -194,14 +195,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
         resistances.appendChild(resistancesContainer);
-    
+
         pokemonCard.appendChild(pokemonImage);
         pokemonCard.appendChild(pokemonName);
         pokemonCard.appendChild(pokemonTypeContainer);
         pokemonCard.appendChild(pokemonNumber);
         pokemonCard.appendChild(weaknesses);
         pokemonCard.appendChild(resistances);
-    
+
         pokemonContainer.appendChild(pokemonCard);
+
+        pokemonCard.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const selectedCard = document.querySelector('.pokemon-card.selected');
+            if (selectedCard) {
+                selectedCard.classList.remove('selected');
+            }
+            pokemonCard.classList.add('selected');
+        });
     }
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.pokemon-card')) {
+            const selectedCard = document.querySelector('.pokemon-card.selected');
+            if (selectedCard) {
+                selectedCard.classList.remove('selected');
+            }
+        }
+    });
 });

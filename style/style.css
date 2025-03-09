@@ -85,6 +85,16 @@ body {
   align-items: center;
   flex-direction: column;
   padding: 10px;
+  transition: transform 0.3s ease;
+}
+.pokemon-card.selected {
+  transform: scale(1.1);
+  z-index: 10;
+}
+.pokemon-card p {
+  font-size: 0.9em;
+  color: #000;
+  font-weight: 700;
 }
 .pokemon-card .pokemon-type {
   display: flex;
@@ -121,6 +131,14 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  background-color: #f0f0f0;
+  height: 50px;
 }
 
 @media (max-width: 780px) {
